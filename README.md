@@ -117,7 +117,7 @@ for (const auto& [entity, control, physicsBody] : ecs.Registry.view<DirectionalC
 
 ## Final output:
 - Final output with Debug Drawing:
-![DebugDrawing](https://github.com/AnnedeGeus01/AnnedeGeus01.github.io/assets/144111374/3b35e010-ddfb-4c85-a4db-ea31046aa297)
+![WithDebug](https://github.com/AnnedeGeus01/AnnedeGeus01.github.io/assets/144111374/ecdac8dc-1a5d-4e27-80b2-bceb03abe57d)
 
 - Final output run in Release:
 ![Release](https://github.com/AnnedeGeus01/AnnedeGeus01.github.io/assets/144111374/464b5631-81a1-4a07-823f-36af10f2a09c)
