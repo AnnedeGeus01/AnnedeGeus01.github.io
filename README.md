@@ -18,7 +18,7 @@
 - In the JoltPhysics-Master files you want to go JoltPhysics-Master -> UnitTest and get the Layers.h file, and add it to your project as well. I recommend putting this files with your own made classes since you will need to change something in the class. You need to include **#include <Jolt/Jolt.h>** at the top of the other includes. With this done, and if you have looked at the hello world example, this layers.h file sets up all of the layers for you, that in the hello world were made in the main itself, this file gives for cleaner and simpler code.
 Now you are all set up for the Jolt Physics library, and can use it in your project!
 
-### Setting up the needed classes:
+### 3. Setting up the needed classes:
 ECS, or Entity-Component-System, is a design pattern where entities are composed of components, and systems process entities based on their components. In this case, the `PhysicsSetup` class represents the system responsible for handling physics, and the `JoltBody` class is a component representing a physics body. I put them under the same namingspace, so it is clear to see it belongs togeher, but this is up for personal preference.
 
 ### 4. Initializing the Physics world, in the PhysicsSetup class.
