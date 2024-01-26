@@ -2,6 +2,8 @@
 
 ## How to set up and use Jolt in an entity component system (c++) for beginners.
 
+###  Why I am making this blog post:
+I am a second year student at Buas University studying game development, and for this project we had to think of our own project, according to real life job applications, I found one for a physics programmer, and I thought it was cool to do breaking meshes, and apply physics to that so it is interactive, the main part of the job was to be able to work with an external physics librairy, so that was the first step of my plan. Sadly in the first two weeks I fell ill so I did not nearly have as much time as I would have liked for this project, other then that it also took me very long to learn how to work with Jolt Physics, this might not be because of Jolt physics, because now that I do know how to use the librairy I can see why it is good and using it again will not be a problem, but if you too, like me, always have a hard time learning how to work with external code, this is for you.
 
 ## steps to take:
 1. Look at the [API of Jolt Physics](https://jrouwe.github.io/JoltPhysics/) and look at their hello world example in the JoltPhysics-Master that you can download on [their github.](https://www.google.com)
@@ -122,6 +124,5 @@ for (const auto& [entity, control, physicsBody] : ecs.Registry.view<DirectionalC
 - Final output run in Release:
 ![Release](https://github.com/AnnedeGeus01/AnnedeGeus01.github.io/assets/144111374/464b5631-81a1-4a07-823f-36af10f2a09c)
 
-
-
-
+## Conclusion:
+Looking back at what I have made and how it went with using Jolt physics, 
