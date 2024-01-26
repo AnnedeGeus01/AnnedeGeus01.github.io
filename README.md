@@ -1,4 +1,5 @@
-# AnnedeGeus01.github.io
+![image](https://github.com/AnnedeGeus01/AnnedeGeus01.github.io/assets/144111374/34e2f9bb-eb1d-40d0-84bb-2bf0b4742d57)
+
 
 ## How to set up and use Jolt in an entity component system (c++) for beginners.
 
@@ -117,5 +118,4 @@ physics.createSphere(playerEntity, vec3(7.0, 0.0, 5.0), 1.f, true);
 ## Conclusion:
 Looking back at what I have made and how it went with using Jolt physics, after all of the small mistakes and the bigger ones, I can see that Jolt Physics is really pleasent to work with, and once I understood everything it did make sense, sometimes I learn to work with a library and it will be just that, i can work with it but I dont know many of its intricacies, it is probably because it is a newer library and the community is not that big, so there is not a lot on specific needs, like how it can be used in an ECS. But I think in the end this did help me, by forcing me to really look into the ins and outs of the librairy, I hope this practice has made me learn how to deal with new librairies better, and I am happy that everythin worked out in the end, even if it took some time to get it right.
 
-![image](https://github.com/AnnedeGeus01/AnnedeGeus01.github.io/assets/144111374/34e2f9bb-eb1d-40d0-84bb-2bf0b4742d57)
 
