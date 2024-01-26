@@ -6,19 +6,19 @@
 I am a second year student at Buas University studying game development, and for this project we had to think of our own project, according to real life job applications, I found one for a physics programmer, and I thought it was cool to do breaking meshes, and apply physics to that so it is interactive, the main part of the job was to be able to work with an external physics librairy, so that was the first step of my plan. Sadly in the first two weeks I fell ill so I did not nearly have as much time as I would have liked for this project, other then that it also took me very long to learn how to work with Jolt Physics, this might not be because of Jolt physics, because now that I do know how to use the librairy I can see why it is good and using it again will not be a problem, but if you too, like me, always have a hard time learning how to work with external code, this is for you.
 
 ## steps to take:
-1. Look at the [API of Jolt Physics](https://jrouwe.github.io/JoltPhysics/) and look at their hello world example in the JoltPhysics-Master that you can download on [their github.](https://www.google.com)
-2. Including the library in your project.
+1. My first step was to look at the [API of Jolt Physics](https://jrouwe.github.io/JoltPhysics/) and look at their hello world example in the JoltPhysics-Master that you can download on [their github.](https://www.google.com). 
+2. Including the library in my project.
 3. Setting up the needed classes.
 4. Initializing the Physics world.
 5. Creating bodies.
 6. What to put in the update loop.
 
-### 2. Including the library in your project:
+### 2. Including the library in my project:
 #### To include the Jolt library into your project you need to take a couple of steps:
-- Firstly download the JoltPhysics-Master from their github, and copy the Jolt folder and put it in your project in an appropriate place, like in a folder called external or something similar to that.
-- Then in the properties settings of your project you want to go C/C++-> General-> Additional Include Directories and add **$(ProjectDir)external\joltPhysics** in both debug and release.
-- In the JoltPhysics-Master files you want to go JoltPhysics-Master -> UnitTest and get the Layers.h file, and add it to your project as well. I recommend putting this files with your own made classes since you will need to change something in the class. You need to include **#include <Jolt/Jolt.h>** at the top of the other includes. With this done, and if you have looked at the hello world example, this layers.h file sets up all of the layers for you, that in the hello world were made in the main itself, this file gives for cleaner and simpler code.
-Now you are all set up for the Jolt Physics library, and can use it in your project!
+- Firstly I downloaded the JoltPhysics-Master from their github, and I copied the Jolt folder and put it in my project in an appropriate place, in an external folder.
+- Then in the properties settings of ny project I needed to go C/C++ -> General -> Additional Include Directories and add **$(ProjectDir)external\joltPhysics** in both debug and release.
+- In the JoltPhysics-Master files I needed to go JoltPhysics-Master -> UnitTest and get the Layers.h file, and add it to my project as well. I needed to include **#include <Jolt/Jolt.h>** at the top of the other includes. With this done,after having looked at the hello world file, this layers.h file sets up all of the layers for me, that in the hello world were made in the main itself, this file gives for cleaner and simpler code.
+Now I was all set up for the Jolt Physics library, and I can use it in my project!
 
 ### 3. Setting up the needed classes:
 ECS, or Entity-Component-System, is a design pattern where entities are composed of components, and systems process entities based on their components. In this case, the **PhysicsSetup** class represents the system responsible for handling physics, and the **JoltBody** class is a component representing a physics body. I put them under the same namingspace, so it is clear to see it belongs togeher, but this is up for personal preference.
@@ -53,8 +53,8 @@ private:
     PhysicsSystem* mPhysicsSystem = nullptr;                           // The physics system that simulates the world
 };
 ```
-- Represents the system responsible for handling physics. Inherits from *System*, in my case, but depending on what ECS you are working with, you need to derive from the appropriate system.
-- The **Initialize** function is responsible for setting up the Jolt physics system. It takes a Boolean parameter *gravity* to determine whether gravity is enabled. In the function it sets up things like the gravity, if it is on, and it sets up limitations, like the temporary allocator, the maximum amount of bodies, how many mutexes (a mutex is like a lock used in computer programming to make sure that only one part of the program can access or modify specific data at a time, preventing conflicts when multiple things try to use that data simultaneously), the maximum amount of body pairs that can be queued at a time and the maximum size of the constraint buffer. It then creates a physics system and initializes it, and lastly it creates a body interface which is the main way of interacting with bodies in the physics system. While profiling i tested if it makes a big difference in performance if you already allocate a lot for the tempAllocator, and the max amount of bodies etc. and it does not make a difference so i hardcoded it to already have a big allocation, if it would have made a big difference, I would have made a parameter in the initialisation function so you can set it there depending on what your project needs. If you do go over this limit, in initializing before running it, it will break at an error code Jolt made tell you that too many bodies have been created. On the other hand, if you create too many shapes while already running, it seems that jolt takes care of it by just removing some shapes, you can see this by them falling throuhg the floor:
+- Represents the system responsible for handling physics. Inherits from *System*, which makes it inherit all of the properties that a system needs.
+- The **Initialize** function is responsible for setting up the Jolt physics system. It takes a Boolean parameter *gravity* to determine whether gravity is enabled. In the function it sets up things like the gravity, if it is on, and it sets up limitations, like the temporary allocator, the maximum amount of bodies, how many mutexes (a mutex is like a lock used in computer programming to make sure that only one part of the program can access or modify specific data at a time, preventing conflicts when multiple things try to use that data simultaneously), the maximum amount of body pairs that can be queued at a time and the maximum size of the constraint buffer. It then creates a physics system and initializes it, and lastly it creates a body interface which is the main way of interacting with bodies in the physics system. While profiling I tested if it makes a big difference in performance if you already allocate a lot for the tempAllocator, and the max amount of bodies etc. and it does not make a difference so i hardcoded it to already have a big allocation, if it would have made a big difference, I would have made a parameter in the initialisation function so you can set it there depending on what your project needs. If you do go over this limit, in initializing before running it, it will break at an error code Jolt made tell you that too many bodies have been created. On the other hand, if you create too many shapes while already running, it seems that jolt takes care of it by just removing some shapes, you can see this by them falling through the floor:
 ![allocatingTooMany](https://github.com/AnnedeGeus01/AnnedeGeus01.github.io/assets/144111374/9e945638-527b-4f4b-8009-7f35e1aec124)
 - The **Update** function is made to be called each frame to update the physics simulation. It iterates over entities that have both a *Transform* and a *JoltBody* component, updating their positions and rotations based on the physics simulation, this allows for a nice synchronization between the ECS and the physics simulation.
 - Functions like **createBox**, **createSphere**, and **createConvexHull** make the process of creating entities with physics bodies easier. They handle the creation of both the *Transform* and *joltPhysics::JoltBody* components for the specified shapes. For me I use a mesh renderer to create my physics body, but all you need is the set of points that the mesh has, and pass it into the function and that way you can get the shape, I just chose to do this since this saves me space and extra work in the main, and it is just done each time in the create function itself.
@@ -90,31 +90,21 @@ The example below shows how easy it is to create a physics entity with just a fe
 // In the main:
 // system set up example:
 bool gravity = true;
-auto& physics = ecs.CreateSystem<joltPhysics::PhysicsSetup>();
+auto& physics = CreateSystem<joltPhysics::PhysicsSetup>();
 physics.Initialize(gravity);
 
-// Body creation example:
-const auto floorEntity = ecs.CreateEntity();
+// Square shape example:
+const auto floorEntity = CreateEntity();
 physics.createBox(floorEntity, vec3{0.0f, 0.0f, 0.0f}, vec3(100.0f * 0.5f, 100.0f * 0.5f, 1.f), false);
 
 // Convx shape example:
-const auto convexEntity = ecs.CreateEntity();
-auto& meshRenderer = Engine.ECS().CreateComponent<MeshRenderer>(convexEntity, model->CreateMeshRendererFromNode("Suzanne"));
+const auto convexEntity = CreateEntity();
+auto& meshRenderer;
 physics.createConvexHull(convexEntity, vec3(0.5, 0, 5), vec3(1, 1, 1), meshRenderer, true);
 
-// Body with control example:
-const auto playerEntity = ecs.CreateEntity();
+// Shpere shape example:
+const auto playerEntity = CreateEntity();
 physics.createSphere(playerEntity, vec3(7.0, 0.0, 5.0), 1.f, true);
-Engine.ECS().CreateComponent<DirectionalControl>(playerEntity, 0, 6.0f); // Note that Jolt does NOT give a way t check for input, this should be something in the engine or self made.
-
-// If you want to use input to move a body you can do something like this in the update:
-for (const auto& [entity, control, physicsBody] : ecs.Registry.view<DirectionalControl, joltPhysics::JoltBody>().each())
-{
-    control.ComputeInputVelocity();
-    // Update the position based on the input velocity
-    vec3 velocity = vec3(control.m_inputVelocity.x, control.m_inputVelocity.y, physicsBody.getVelocity().z);
-    physicsBody.setVelocity(velocity); // Just set the velocity, and the update function in PhysicsSetup will take care of the rest.
-}
 ```
 
 ## Final output:
@@ -125,4 +115,4 @@ for (const auto& [entity, control, physicsBody] : ecs.Registry.view<DirectionalC
 ![Release](https://github.com/AnnedeGeus01/AnnedeGeus01.github.io/assets/144111374/464b5631-81a1-4a07-823f-36af10f2a09c)
 
 ## Conclusion:
-Looking back at what I have made and how it went with using Jolt physics, 
+Looking back at what I have made and how it went with using Jolt physics, after all of the small mistakes and the bigger ones, I can see that Jolt Physics is really pleasent to work with, and once I understood everything it did make sense, sometimes I learn to work with a library and it will be just that, i can work with it but I dont know many of its intricacies, it is probably because it is a newer library and the community is not that big, so there is not a lot on specific needs, like how it can be used in an ECS. But I think in the end this did help me, by forcing me to really look into the ins and outs of the librairy, I hope this practice has made me learn how to deal with new librairies better, and I am happy that everythin worked out in the end, even if it took some time to get it right.
